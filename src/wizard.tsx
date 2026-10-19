@@ -14,6 +14,7 @@ type Props = {
   onConfigChange: (next: HandbookConfig) => void;
   onStepChange: (next: WizardStep) => void;
   onGenerate: () => void;
+  onHome: () => void;
 };
 
 function CountGrid<K extends string>({
@@ -59,6 +60,7 @@ export function Wizard({
   onConfigChange,
   onStepChange,
   onGenerate,
+  onHome,
 }: Props) {
   const memberCount = config.members.length;
   const slots = totalSlots(config);
@@ -109,11 +111,12 @@ export function Wizard({
       <p className="lede">
         First set how many people are in the household. Then enter account and
         asset counts for each person. Shared items (home, contacts, pets) come
-        last. The printable PDF is sectioned per member.
+        last. On the handbook, type the details you want printed.
       </p>
       <div className="note">
-        Password blanks are for handwriting on paper after you print. Do not type
-        real passwords into this web app.
+        Typed details stay in this tab only. Refresh or close the tab to discard
+        them. Typing passwords and PINs is allowed, but not recommended. Do not
+        upload a filled PDF.
       </div>
 
       <p className="summary" data-testid="wizard-step-label">
@@ -206,7 +209,7 @@ export function Wizard({
 
       <div className="wizard-footer">
         <p className="summary" data-testid="slot-summary" data-total={slots}>
-          About {slots} blank item slots across {memberCount} member
+          About {slots} item slots across {memberCount} member
           {memberCount === 1 ? '' : 's'} + household sections.
         </p>
         <div className="toolbar-actions">
@@ -215,12 +218,17 @@ export function Wizard({
               Back
             </button>
           ) : (
-            <button
-              type="button"
-              onClick={() => onConfigChange(createDefaultConfig())}
-            >
-              Reset defaults
-            </button>
+            <>
+              <button type="button" onClick={onHome}>
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={() => onConfigChange(createDefaultConfig())}
+              >
+                Reset defaults
+              </button>
+            </>
           )}
           <button
             type="button"

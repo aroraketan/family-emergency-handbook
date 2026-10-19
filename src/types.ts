@@ -39,6 +39,20 @@ export type HandbookData = {
   secretFields: string[];
 };
 
+export type EncryptedSecrets = {
+  kdf: 'PBKDF2-SHA-256';
+  iterations: number;
+  salt: string;
+  iv: string;
+  ciphertext: string;
+};
+
+/** Version 1 is the whole handbook as one ciphertext. */
+export type SavedHandbook = EncryptedSecrets & {
+  schemaVersion: 1;
+  savedAt: string;
+};
+
 export type CountField<K extends string> = {
   key: K;
   label: string;
@@ -47,7 +61,7 @@ export type CountField<K extends string> = {
   max: number;
 };
 
-export type View = 'wizard' | 'handbook';
+export type View = 'home' | 'wizard' | 'handbook';
 
 export type WizardStep =
   | { kind: 'size' }
