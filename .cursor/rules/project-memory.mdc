@@ -9,7 +9,7 @@ alwaysApply: true
 
 ## At the start of a session
 
-Read `MEMORY.md` before making changes. Respect its **Hard constraints**: local only, never deploy to Uber/vibe infra, and no secrets in the browser.
+Read `MEMORY.md` before making changes. Respect its **Hard constraints**: local only, never deploy to vibe infra, and no secrets in the browser.
 
 ## After every major change
 

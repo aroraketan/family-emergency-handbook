@@ -8,7 +8,7 @@ A React app that builds a printable family emergency handbook. Details can be ty
 
 ## Hard constraints (from the user)
 
-- **Not on Uber infra.** Never deploy to vibe-mcp, TerraBLOB, or the vibe-apps repo. Do not use vibe plugin skills to build or deploy this project. The blank app is published on the user's personal GitHub Pages site.
+- **Personal hosting only.** Never deploy to vibe-mcp, TerraBLOB, or the vibe-apps repo. Do not use vibe plugin skills to build or deploy this project. The blank app is published on the user's personal GitHub Pages site.
 - **No stored secrets.** The handbook accepts typed details so they can be printed. Typing passwords and PINs is allowed, but not recommended. Values live in React state for the open tab only: no localStorage, sessionStorage, cookies, URL, or server. **Save JSON** always asks for a passphrase and downloads a file the user chooses to keep. The whole handbook is one AES-GCM ciphertext; the key is derived with PBKDF2-SHA-256 (600,000 iterations). The download name includes the local date and time. The passphrase is asked again on load and is not stored. Saved files are schema version 1 only. Refresh, close the tab, or Reset discards the in-app copy. Reset clears typed details and member names and counts, then returns to the opening screen. Do not commit or sync a filled PDF or saved JSON to cloud storage.
 - Indian context: identity docs include **Aadhaar** and **PAN** (not SSN/Tax ID).
 
@@ -51,8 +51,8 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-15 to 10-19 (original session, `~/web-code` workspace)** — Built initially as a vibe app; user then asked for local-only. Iterations: count-driven wizard, passwords included on the paper master, zero-count sections skipped, Aadhaar added and Tax ID/SSN renamed to PAN, redesigned to per-member counts with per-member PDF sections.
 - **2026-10-19 — moved to this standalone project.** Removed from `~/vibe-apps` (local commit) and replaced the hosted vibe app with a private "Removed" stub. A full slug deletion needs a vibe admin (`#vibe-tools`). `~/tmp/family-emergency-handbook` contains only a `MOVED.md` pointer.
 - **2026-10-19** — Verified `tsc` and `vite build` pass locally; added this memory file and the memory-update rule.
-- **2026-10-19** — Installed Node 26 via Homebrew (it was missing). Retargeted all 119 `package-lock.json` resolved URLs from `unpm.uberinternal.com` to `registry.npmjs.org` so install works without Uber npm auth. Dev server runs at http://127.0.0.1:5173.
-- **2026-10-19** — Added project `.npmrc` so this folder uses `https://registry.npmjs.org/` even when the user npm config points at Uber's registry.
+- **2026-10-19** — Installed Node 26 via Homebrew (it was missing). Retargeted all 119 `package-lock.json` resolved URLs to `registry.npmjs.org` so install works with public npm. Dev server runs at http://127.0.0.1:5173.
+- **2026-10-19** — Added project `.npmrc` so this folder uses `https://registry.npmjs.org/` even when the user npm config points at another registry.
 - **2026-10-19** — Created private GitHub repo `aroraketan/family-emergency-handbook` and pushed the local project.
 - **2026-10-19** — Made the repo public and added a GitHub Actions Pages workflow. Free GitHub Pages cannot publish a private repo. Site: https://aroraketan.github.io/family-emergency-handbook/
 - **2026-10-19** — Handbook fields accept typed details for printing. Values stay in React state only and are cleared on refresh, tab close, or Clear details. Not committed.
@@ -70,6 +70,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-19** — Removed the setup-screen Generate shortcut. The wizard's last step creates the handbook.
 - **2026-10-19** — Handbook inputs use the sans-serif text face. The printed page body stays serif.
 - **2026-10-19** — The handbook body uses the same sans-serif text face as the inputs and headings.
+- **2026-10-19** — Removed company font names. Body, headings, and inputs use Helvetica Neue, Arial, sans-serif.
 
 ## Known leftovers / open items
 

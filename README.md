@@ -1,6 +1,6 @@
 # Family Emergency Handbook
 
-Personal printable emergency handbook builder. The hosted site is a blank form. It is not deployed to Uber vibe infra.
+Personal printable emergency handbook builder. The hosted site is a blank form on personal GitHub Pages.
 
 Live site: https://aroraketan.github.io/family-emergency-handbook/
 

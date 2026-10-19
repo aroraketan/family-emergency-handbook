@@ -24,7 +24,7 @@ export const APP_CSS = `
   body {
     color: var(--ink);
     background: var(--screen);
-    font-family: "Uber Move Text", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 14px;
     line-height: 1.45;
   }
@@ -160,7 +160,7 @@ export const APP_CSS = `
 
   .wizard h1 {
     margin: 0 0 8px;
-    font-family: "Uber Move", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 28px;
     color: var(--accent);
   }
@@ -222,12 +222,12 @@ export const APP_CSS = `
     background: var(--paper);
     box-shadow: 0 8px 28px rgba(26, 31, 36, 0.18);
     color: var(--ink);
-    font-family: "Uber Move Text", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 11pt;
   }
 
   .sheet h1, .sheet h2, .sheet h3 {
-    font-family: "Uber Move", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-weight: 700;
     margin: 0 0 0.4rem;
   }
@@ -262,7 +262,7 @@ export const APP_CSS = `
   .field-block { break-inside: avoid; margin: 0 0 0.45rem; }
   .field-block label {
     display: block;
-    font-family: "Uber Move", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 0.68rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -283,7 +283,7 @@ export const APP_CSS = `
     border-bottom: 1px solid var(--line);
     background: rgba(255, 255, 255, 0.72);
     color: inherit;
-    font-family: "Uber Move Text", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: inherit;
     line-height: 1.35;
     padding: 0.15rem 0.2rem;
@@ -327,7 +327,7 @@ export const APP_CSS = `
     text-align: left;
   }
   th {
-    font-family: "Uber Move", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -344,7 +344,7 @@ export const APP_CSS = `
     justify-content: space-between;
   }
   .cover-mark {
-    font-family: "Uber Move", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 0.75rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
