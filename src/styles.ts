@@ -396,8 +396,13 @@ export const APP_CSS = `
   }
 
   ${at}media print {
-    body { background: white !important; }
+    html, body { background: var(--paper) !important; }
     .no-print { display: none !important; }
+    .sheet {
+      box-shadow: none;
+      margin: 0;
+      width: auto;
+    }
     .sheet .fill {
       background: transparent !important;
       resize: none;
@@ -405,7 +410,8 @@ export const APP_CSS = `
     }
     ${at}page {
       size: letter;
-      margin: 0.6in 0.65in 0.55in;
+      margin: 0;
+      padding: 8mm 0;
     }
   }
 `;

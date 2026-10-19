@@ -71,6 +71,8 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-19** — Handbook inputs use the sans-serif text face. The printed page body stays serif.
 - **2026-10-19** — The handbook body uses the same sans-serif text face as the inputs and headings.
 - **2026-10-19** — Removed company font names. Body, headings, and inputs use Helvetica Neue, Arial, sans-serif.
+- **2026-10-19** — The handbook card shadow is screen-only. Print drops the shadow and the floating page width.
+- **2026-10-19** — Print uses `@page { margin: 0; padding: 8mm 0 }`. A zero page margin leaves no room for the browser header and footer, and the paper background covers the whole sheet when Background graphics is on.
 
 ## Known leftovers / open items
 
