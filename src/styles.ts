@@ -64,6 +64,92 @@ export const APP_CSS = `
   button.primary { background: #f2efe8; color: var(--ink); }
   button.primary:hover { background: #fff; }
 
+  .save-dialog {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(26, 31, 36, 0.45);
+  }
+
+  .save-dialog form {
+    width: min(440px, 100%);
+    padding: 22px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 8px 28px rgba(26, 31, 36, 0.22);
+  }
+
+  .save-dialog h2 { margin: 0 0 8px; font-size: 1.25rem; }
+  .save-dialog p { margin: 0 0 12px; color: var(--muted); }
+  .save-dialog label { display: block; font-weight: 600; margin: 12px 0 4px; }
+
+  .save-dialog input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+  }
+
+  .save-dialog .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .save-dialog button { color: var(--ink); border-color: var(--ink); }
+  .save-dialog button.primary { background: var(--ink); color: #f2efe8; }
+  .save-dialog button.primary:hover { background: #000; color: #fff; }
+  .save-dialog .save-error { color: var(--warn); margin: 12px 0 0; }
+  .save-dialog button:disabled { opacity: 0.55; cursor: wait; }
+
+  .file-error {
+    margin: 0;
+    padding: 10px 20px;
+    background: #f3e4dc;
+    color: var(--warn);
+    font-weight: 600;
+  }
+
+  .choice-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .wizard .choice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 160px;
+    padding: 24px;
+    text-align: left;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    background: #fff;
+  }
+
+  .wizard .choice:hover { background: var(--ink); color: #f2efe8; }
+  .choice-title { font-size: 1.45rem; font-weight: 700; }
+  .choice-help { font-size: 14px; font-weight: 400; line-height: 1.4; }
+
+  .wizard button { color: var(--ink); border-color: var(--ink); background: transparent; }
+  .wizard button:hover { background: var(--ink); color: #f2efe8; }
+  .wizard button.primary { background: var(--ink); color: #f2efe8; }
+  .wizard button.primary:hover { background: #000; color: #fff; }
+
+  @media (max-width: 640px) {
+    .choice-row { grid-template-columns: 1fr; }
+  }
+
   .wizard {
     max-width: 920px;
     margin: 24px auto 48px;
@@ -190,6 +276,40 @@ export const APP_CSS = `
   .line.tall { min-height: 2.4rem; }
   .line.x-tall { min-height: 3.6rem; }
 
+  .sheet .fill {
+    width: 100%;
+    display: block;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.72);
+    color: inherit;
+    font: inherit;
+    line-height: 1.35;
+    padding: 0.15rem 0.2rem;
+    margin: 0;
+    resize: vertical;
+    outline: none;
+    min-height: 1.35rem;
+    field-sizing: content;
+  }
+  .sheet .fill.tall { min-height: 2.4rem; }
+  .sheet .fill.x-tall { min-height: 3.6rem; }
+  .sheet .fill.plain {
+    border-bottom: none;
+    background: transparent;
+    min-height: 1.2rem;
+    resize: none;
+    padding: 0;
+  }
+  .sheet .fill:focus { background: #fff; }
+
+  .sheet .check {
+    width: 0.85rem;
+    height: 0.85rem;
+    margin-top: 0.2rem;
+    accent-color: var(--ink);
+  }
+
   .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem 1rem; }
   .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.55rem 0.75rem; }
 
@@ -277,12 +397,10 @@ export const APP_CSS = `
   ${at}media print {
     body { background: white !important; }
     .no-print { display: none !important; }
-    .sheet {
-      width: auto;
-      margin: 0;
-      padding: 0;
-      box-shadow: none;
-      background: white;
+    .sheet .fill {
+      background: transparent !important;
+      resize: none;
+      overflow: hidden;
     }
     ${at}page {
       size: letter;

@@ -1,16 +1,25 @@
 import { useMemo, useState } from 'react';
-import { createDefaultConfig, totalSlots } from './defaults';
+import { totalSlots } from './defaults';
 import { Handbook } from './handbook';
+import { HandbookStoreProvider, useHandbookStore } from './store';
 import { APP_CSS } from './styles';
-import type { HandbookConfig, View, WizardStep } from './types';
+import type { View, WizardStep } from './types';
 import { Wizard } from './wizard';
 
 export default function App() {
-  const [config, setConfig] = useState<HandbookConfig>(createDefaultConfig);
+  return (
+    <HandbookStoreProvider>
+      <AppShell />
+    </HandbookStoreProvider>
+  );
+}
+
+function AppShell() {
+  const { data, setConfig } = useHandbookStore();
   const [step, setStep] = useState<WizardStep>({ kind: 'size' });
   const [view, setView] = useState<View>('wizard');
 
-  const slots = useMemo(() => totalSlots(config), [config]);
+  const slots = useMemo(() => totalSlots(data.config), [data.config]);
 
   return (
     <div className="app-shell" data-testid="app-root">
@@ -18,8 +27,8 @@ export default function App() {
 
       <header className="toolbar no-print">
         <p>
-          Private blank handbook builder. Counts are per household member, then
-          shared items. Print and handwrite passwords on paper only.
+          Type details to print them. Values stay only in this open tab. Passwords
+          and PINs may be typed, but that is not recommended.
         </p>
         <div className="toolbar-actions">
           {view === 'handbook' ? (
@@ -57,14 +66,14 @@ export default function App() {
 
       {view === 'wizard' ? (
         <Wizard
-          config={config}
+          config={data.config}
           step={step}
           onConfigChange={setConfig}
           onStepChange={setStep}
           onGenerate={() => setView('handbook')}
         />
       ) : (
-        <Handbook config={config} />
+        <Handbook config={data.config} />
       )}
     </div>
   );

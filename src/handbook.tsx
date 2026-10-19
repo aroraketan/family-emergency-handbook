@@ -8,9 +8,14 @@ type Props = {
 
 export function Handbook({ config }: Props) {
   return (
-    <article className="sheet" data-testid="printable-handbook">
+    <form
+      className="sheet"
+      data-testid="printable-handbook"
+      autoComplete="off"
+      onSubmit={(event) => event.preventDefault()}
+    >
       <HandbookLifeSections config={config} />
       <HandbookAssetSections config={config} />
-    </article>
+    </form>
   );
 }

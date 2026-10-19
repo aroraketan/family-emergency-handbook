@@ -1,5 +1,6 @@
 import {
   BlankRows,
+  DetailInput,
   EmployerBlock,
   Field,
   PersonBlock,
@@ -13,6 +14,18 @@ type Props = {
   sectionNumber: number;
 };
 
+const IDENTITY_DOCS = [
+  'Passport',
+  'Driver license / ID',
+  'Birth certificate',
+  'Aadhaar',
+  'PAN',
+];
+
+function docSlug(label: string): string {
+  return label.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
+}
+
 export function HandbookMemberSection({
   member,
   memberIndex,
@@ -21,16 +34,21 @@ export function HandbookMemberSection({
   const c = member.counts;
   const employers = Array.from({ length: c.employers }, (_, i) => i + 1);
   const title = sectionNumber + '. ' + member.label;
+  const memberKey = 'member-' + memberIndex;
 
   return (
     <section className="page-break" data-testid={'member-section-' + memberIndex}>
       <SectionTitle title={title} />
       <p className="lede">
         Personal details, documents, accounts, and passwords for this person.
-        Handwrite on the printed master only.
+        What you type is included when you print. The app does not keep a copy after you close the tab.
       </p>
+      <div className="note">
+        Typing passwords and PINs is allowed, but not recommended. Prefer writing
+        those on the printed page.
+      </div>
 
-      <PersonBlock index={memberIndex + 1} headingOverride={member.label} />
+      <PersonBlock idPrefix={memberKey + '-person'} headingOverride={member.label} />
 
       <h3>Identity documents</h3>
       <table>
@@ -43,42 +61,39 @@ export function HandbookMemberSection({
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Passport</td>
-            <td />
-            <td />
-            <td />
-          </tr>
-          <tr>
-            <td>Driver license / ID</td>
-            <td />
-            <td />
-            <td />
-          </tr>
-          <tr>
-            <td>Birth certificate</td>
-            <td />
-            <td />
-            <td />
-          </tr>
-          <tr>
-            <td>Aadhaar</td>
-            <td />
-            <td />
-            <td />
-          </tr>
-          <tr>
-            <td>PAN</td>
-            <td />
-            <td />
-            <td />
-          </tr>
-          <tr>
-            <td>Other</td>
-            <td />
-            <td />
-            <td />
-          </tr>
+          {IDENTITY_DOCS.map((doc) => {
+            const slug = docSlug(doc);
+            return (
+              <tr key={slug}>
+                <td>{doc}</td>
+                <td>
+                  <DetailInput id={memberKey + '-doc-' + slug + '-number'} plain />
+                </td>
+                <td>
+                  <DetailInput id={memberKey + '-doc-' + slug + '-location'} plain />
+                </td>
+                <td>
+                  <DetailInput id={memberKey + '-doc-' + slug + '-notes'} plain />
+                </td>
+              </tr>
+            );
+          })}
+          {[0, 1, 2].map((index) => (
+            <tr key={'adhoc-' + index}>
+              <td>
+                <DetailInput id={memberKey + '-doc-adhoc-' + index + '-name'} plain />
+              </td>
+              <td>
+                <DetailInput id={memberKey + '-doc-adhoc-' + index + '-number'} plain />
+              </td>
+              <td>
+                <DetailInput id={memberKey + '-doc-adhoc-' + index + '-location'} plain />
+              </td>
+              <td>
+                <DetailInput id={memberKey + '-doc-adhoc-' + index + '-notes'} plain />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
@@ -98,7 +113,7 @@ export function HandbookMemberSection({
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={c.medications} columns={4} />
+              <BlankRows count={c.medications} columns={4} idPrefix={memberKey + '-meds'} />
             </tbody>
           </table>
         </>
@@ -121,7 +136,12 @@ export function HandbookMemberSection({
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={c.bankAccounts} columns={5} />
+              <BlankRows
+                count={c.bankAccounts}
+                columns={5}
+                idPrefix={memberKey + '-banks'}
+                secretColumns={[4]}
+              />
             </tbody>
           </table>
         </>
@@ -143,7 +163,12 @@ export function HandbookMemberSection({
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={c.creditCards} columns={4} />
+              <BlankRows
+                count={c.creditCards}
+                columns={4}
+                idPrefix={memberKey + '-cards'}
+                secretColumns={[2]}
+              />
             </tbody>
           </table>
         </>
@@ -166,7 +191,12 @@ export function HandbookMemberSection({
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={c.fixedDeposits} columns={5} />
+              <BlankRows
+                count={c.fixedDeposits}
+                columns={5}
+                idPrefix={memberKey + '-fds'}
+                secretColumns={[4]}
+              />
             </tbody>
           </table>
         </>
@@ -189,16 +219,21 @@ export function HandbookMemberSection({
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={c.investments} columns={5} />
+              <BlankRows
+                count={c.investments}
+                columns={5}
+                idPrefix={memberKey + '-investments'}
+                secretColumns={[3]}
+              />
             </tbody>
           </table>
           <h3>Crypto / digital assets (if any)</h3>
           <div className="row-2">
-            <Field label="Exchange — username / email" />
-            <Field label="Exchange — password (handwrite)" />
+            <Field id={memberKey + '-crypto-user'} label="Exchange — username / email" />
+            <Field id={memberKey + '-crypto-password'} label="Exchange — password" secret />
           </div>
-          <Field label="Hardware wallet location" />
-          <Field label="Seed phrase / recovery words (handwrite)" xTall />
+          <Field id={memberKey + '-crypto-wallet'} label="Hardware wallet location" />
+          <Field id={memberKey + '-crypto-seed'} label="Seed phrase / recovery words" xTall secret />
         </>
       ) : null}
 
@@ -219,10 +254,14 @@ export function HandbookMemberSection({
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={c.insurancePolicies} columns={5} />
+              <BlankRows
+                count={c.insurancePolicies}
+                columns={5}
+                idPrefix={memberKey + '-insurance'}
+              />
             </tbody>
           </table>
-          <Field label="Life insurance nominees" tall />
+          <Field id={memberKey + '-nominees'} label="Life insurance nominees" tall />
         </>
       ) : null}
 
@@ -243,7 +282,7 @@ export function HandbookMemberSection({
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={c.loans} columns={5} />
+              <BlankRows count={c.loans} columns={5} idPrefix={memberKey + '-loans'} />
             </tbody>
           </table>
         </>
@@ -251,17 +290,17 @@ export function HandbookMemberSection({
 
       <h3>Core digital access</h3>
       <div className="note">
-        Handwrite passwords on the printed master. Do not type them into the app.
+        Typing these passwords and PINs is allowed, but not recommended.
       </div>
       <div className="row-2">
-        <Field label="Password manager — product" />
-        <Field label="Password manager master password" />
-        <Field label="Primary email + password" tall />
-        <Field label="Recovery email / phone" />
-        <Field label="Apple ID / iCloud + password" tall />
-        <Field label="Google account + password" tall />
-        <Field label="Phone unlock PIN / passcode" />
-        <Field label="SIM PIN / PUK" />
+        <Field id={memberKey + '-pm-product'} label="Password manager — product" />
+        <Field id={memberKey + '-pm-master'} label="Password manager master password" secret />
+        <Field id={memberKey + '-email-login'} label="Primary email + password" tall secret />
+        <Field id={memberKey + '-recovery'} label="Recovery email / phone" />
+        <Field id={memberKey + '-apple'} label="Apple ID / iCloud + password" tall secret />
+        <Field id={memberKey + '-google'} label="Google account + password" tall secret />
+        <Field id={memberKey + '-phone-pin'} label="Phone unlock PIN / passcode" secret />
+        <Field id={memberKey + '-sim'} label="SIM PIN / PUK" secret />
       </div>
 
       {c.digitalAccounts > 0 ? (
@@ -280,7 +319,12 @@ export function HandbookMemberSection({
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={c.digitalAccounts} columns={4} />
+              <BlankRows
+                count={c.digitalAccounts}
+                columns={4}
+                idPrefix={memberKey + '-logins'}
+                secretColumns={[2, 3]}
+              />
             </tbody>
           </table>
         </>
@@ -293,7 +337,7 @@ export function HandbookMemberSection({
             <span className="count-pill">({c.employers})</span>
           </h3>
           {employers.map((n) => (
-            <EmployerBlock key={n} index={n} />
+            <EmployerBlock key={n} index={n} idPrefix={memberKey + '-job-' + n} />
           ))}
         </>
       ) : null}

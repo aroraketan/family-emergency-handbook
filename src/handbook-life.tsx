@@ -34,25 +34,25 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
           <div className="cover-mark">Private · Offline · Family use only</div>
           <h1>Family Emergency Handbook</h1>
           <p className="subtitle">
-            Blank fill-in template sectioned by household member. Write details
-            by hand. Store in a secure place. Do not email or cloud-sync a filled
+            Fill the fields, then print. Details stay in this open tab only.
+            Store the paper copy securely. Do not email or cloud-sync a filled
             copy.
           </p>
           <div className="cover-box">
             <div className="row-2">
-              <Field label="Household / family name" />
-              <Field label="Date last updated" />
-              <Field label="Primary keeper of this book" />
-              <Field label="Secondary person who knows location" />
+              <Field id="cover-family" label="Household / family name" />
+              <Field id="cover-updated" label="Date last updated" />
+              <Field id="cover-keeper" label="Primary keeper of this book" />
+              <Field id="cover-secondary" label="Secondary person who knows location" />
             </div>
-            <Field label="Physical storage location" />
+            <Field id="cover-storage" label="Physical storage location" />
           </div>
         </div>
         <div className="cover-foot">
-          This master copy is meant for a secure offline location. You may write
-          passwords, PINs, and recovery codes by hand on these pages. Never type
-          them into the web app, never photograph a filled page, and never email
-          or cloud-sync a completed copy.
+          Typed details exist only until you refresh, close this tab, or choose
+          Reset, which clears the household setup and returns to the start. Print
+          the paper master and keep that offline. Do not
+          email or cloud-sync a completed copy.
         </div>
       </section>
 
@@ -61,7 +61,10 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
         <ul className="checklist">
           <li>
             <span className="box" />
-            <span>Print on paper (prefer ink on paper for the master copy).</span>
+            <span>
+              Type details in the fields. Passwords and PINs may be typed, but writing
+              them on the printed page is preferable. Nothing is saved.
+            </span>
           </li>
           <li>
             <span className="box" />
@@ -69,7 +72,7 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
           </li>
           <li>
             <span className="box" />
-            <span>Fill blanks in pen after printing. Update the cover date after changes.</span>
+            <span>Print the paper master, then clear this page or close the tab.</span>
           </li>
           <li>
             <span className="box" />
@@ -110,6 +113,7 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
                   <NumberedBlankRows
                     count={hh.emergencyContacts}
                     columnsAfterNumber={4}
+                    idPrefix="contacts-priority"
                   />
                 </tbody>
               </table>
@@ -131,21 +135,21 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
                   </tr>
                 </thead>
                 <tbody>
-                  <BlankRows count={hh.neighbors} columns={4} />
+                  <BlankRows count={hh.neighbors} columns={4} idPrefix="contacts-neighbors" />
                 </tbody>
               </table>
             </>
           ) : null}
           <h3>Professionals</h3>
           <div className="row-2">
-            <Field label="Family attorney — name" />
-            <Field label="Phone / email" />
-            <Field label="Accountant / tax preparer" />
-            <Field label="Phone / email" />
-            <Field label="Financial advisor" />
-            <Field label="Phone / email" />
-            <Field label="Insurance agent" />
-            <Field label="Phone / email" />
+            <Field id="pro-attorney" label="Family attorney — name" />
+            <Field id="pro-attorney-phone" label="Phone / email" />
+            <Field id="pro-accountant" label="Accountant / tax preparer" />
+            <Field id="pro-accountant-phone" label="Phone / email" />
+            <Field id="pro-advisor" label="Financial advisor" />
+            <Field id="pro-advisor-phone" label="Phone / email" />
+            <Field id="pro-agent" label="Insurance agent" />
+            <Field id="pro-agent-phone" label="Phone / email" />
           </div>
         </section>
       ) : null}
@@ -153,38 +157,38 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
       <section className="page-break">
         <SectionTitle title={section.medical + '. Shared medical info'} />
         <div className="row-2">
-          <Field label="Preferred hospital" />
-          <Field label="Preferred pharmacy" />
-          <Field label="Primary care doctor" />
-          <Field label="Phone" />
-          <Field label="Family health insurance plan" />
-          <Field label="Member / policy ID location" />
+          <Field id="med-hospital" label="Preferred hospital" />
+          <Field id="med-pharmacy" label="Preferred pharmacy" />
+          <Field id="med-doctor" label="Primary care doctor" />
+          <Field id="med-doctor-phone" label="Phone" />
+          <Field id="med-plan" label="Family health insurance plan" />
+          <Field id="med-plan-id" label="Member / policy ID location" />
         </div>
         <h3>Advance care</h3>
         <div className="row-2">
-          <Field label="Healthcare proxy / agent" />
-          <Field label="Phone" />
-          <Field label="Living will / advance directive location" />
-          <Field label="Organ donor notes" />
+          <Field id="med-proxy" label="Healthcare proxy / agent" />
+          <Field id="med-proxy-phone" label="Phone" />
+          <Field id="med-directive" label="Living will / advance directive location" />
+          <Field id="med-donor" label="Organ donor notes" />
         </div>
       </section>
 
       <section className="page-break">
         <SectionTitle title={section.home + '. Home and property'} />
-        <Field label="Primary residence address" />
+        <Field id="home-address" label="Primary residence address" />
         <div className="row-2">
-          <Field label="Own / rent" />
-          <Field label="Landlord / HOA / property mgmt" />
-          <Field label="Landlord / HOA phone" />
-          <Field label="Mortgage lender / servicer" />
-          <Field label="Spare key location" />
-          <Field label="Who else has a key" />
-          <Field label="Alarm / smart lock — vendor" />
-          <Field label="Alarm / door code (handwrite)" />
-          <Field label="Safe / lockbox location" />
-          <Field label="Safe combo / key code (handwrite)" />
-          <Field label="Wi-Fi network name (SSID)" />
-          <Field label="Wi-Fi password (handwrite)" />
+          <Field id="home-own" label="Own / rent" />
+          <Field id="home-landlord" label="Landlord / HOA / property mgmt" />
+          <Field id="home-landlord-phone" label="Landlord / HOA phone" />
+          <Field id="home-mortgage" label="Mortgage lender / servicer" />
+          <Field id="home-spare-key" label="Spare key location" />
+          <Field id="home-other-keys" label="Who else has a key" />
+          <Field id="home-alarm-vendor" label="Alarm / smart lock — vendor" />
+          <Field id="home-alarm-code" label="Alarm / door code" secret />
+          <Field id="home-safe" label="Safe / lockbox location" />
+          <Field id="home-safe-code" label="Safe combo / key code" secret />
+          <Field id="home-wifi" label="Wi-Fi network name (SSID)" />
+          <Field id="home-wifi-password" label="Wi-Fi password" secret />
         </div>
         {hh.utilities > 0 ? (
           <>
@@ -198,17 +202,22 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
                   <th>Service</th>
                   <th>Company</th>
                   <th>Account # / username</th>
-                  <th>Password (handwrite)</th>
+                  <th>Password</th>
                   <th>Phone</th>
                 </tr>
               </thead>
               <tbody>
-                <BlankRows count={hh.utilities} columns={5} />
+                <BlankRows
+                  count={hh.utilities}
+                  columns={5}
+                  idPrefix="home-utilities"
+                  secretColumns={[3]}
+                />
               </tbody>
             </table>
           </>
         ) : null}
-        <Field label="Other property (second home / land / docs location)" tall />
+        <Field id="home-other-property" label="Other property (second home / land / docs location)" tall />
       </section>
 
       {showVehicles ? (
@@ -226,16 +235,16 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
       <section className="page-break">
         <SectionTitle title={section.legal + '. Estate and shared legal'} />
         <div className="row-2">
-          <Field label="Marriage / partnership certificate location" />
-          <Field label="Will — location" />
-          <Field label="Executor name + phone" />
-          <Field label="Trust — location / trustee" />
-          <Field label="Power of attorney — location / agent" />
-          <Field label="Safe deposit box — bank + box #" />
-          <Field label="Safe deposit keys location" />
-          <Field label="Attorney who holds copies" />
+          <Field id="legal-marriage" label="Marriage / partnership certificate location" />
+          <Field id="legal-will" label="Will — location" />
+          <Field id="legal-executor" label="Executor name + phone" />
+          <Field id="legal-trust" label="Trust — location / trustee" />
+          <Field id="legal-poa" label="Power of attorney — location / agent" />
+          <Field id="legal-box" label="Safe deposit box — bank + box #" />
+          <Field id="legal-box-keys" label="Safe deposit keys location" />
+          <Field id="legal-attorney" label="Attorney who holds copies" />
         </div>
-        <Field label="Funeral / burial preferences (optional)" tall />
+        <Field id="legal-funeral" label="Funeral / burial preferences (optional)" tall />
       </section>
     </>
   );

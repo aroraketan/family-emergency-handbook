@@ -1,4 +1,4 @@
-import { BlankRows, Field, SectionTitle } from './handbook-parts';
+import { BlankRows, CheckItem, Field, SectionTitle } from './handbook-parts';
 import { countLifeSections } from './handbook-life';
 import { createSectionNumbers } from './section-numbers';
 import type { HandbookConfig } from './types';
@@ -24,10 +24,10 @@ export function HandbookAssetSections({ config }: { config: HandbookConfig }) {
       <section className="page-break">
         <SectionTitle title={label('cash') + '. Cash access (household)'} />
         <div className="row-2">
-          <Field label="Main ATM / debit card location" />
-          <Field label="ATM / debit PIN (handwrite)" />
-          <Field label="How to get cash in first 72 hours" tall />
-          <Field label="Emergency cash stash location (optional)" tall />
+          <Field id="cash-card" label="Main ATM / debit card location" />
+          <Field id="cash-pin" label="ATM / debit PIN" secret />
+          <Field id="cash-72h" label="How to get cash in first 72 hours" tall />
+          <Field id="cash-stash" label="Emergency cash stash location (optional)" tall />
         </div>
       </section>
 
@@ -48,7 +48,7 @@ export function HandbookAssetSections({ config }: { config: HandbookConfig }) {
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={hh.subscriptions} columns={5} />
+              <BlankRows count={hh.subscriptions} columns={5} idPrefix="subscriptions" />
             </tbody>
           </table>
         </section>
@@ -68,63 +68,48 @@ export function HandbookAssetSections({ config }: { config: HandbookConfig }) {
               </tr>
             </thead>
             <tbody>
-              <BlankRows count={hh.pets} columns={5} />
+              <BlankRows count={hh.pets} columns={5} idPrefix="pets" />
             </tbody>
           </table>
-          <Field label="Who can take the pets in an emergency" />
-          <Field label="Food / supply location" />
+          <Field id="pets-caretaker" label="Who can take the pets in an emergency" />
+          <Field id="pets-food" label="Food / supply location" />
         </section>
       ) : null}
 
       <section className="page-break">
         <SectionTitle title={label('actions') + '. If something happens — action plans'} />
         <h3>If someone is incapacitated</h3>
-        <Field label="Who has medical decision authority" />
-        <Field label="First three calls" tall />
-        <Field label="Where to find insurance cards / meds list" />
+        <Field id="plan-authority" label="Who has medical decision authority" />
+        <Field id="plan-calls" label="First three calls" tall />
+        <Field id="plan-cards" label="Where to find insurance cards / meds list" />
         <h3>If someone dies</h3>
-        <Field label="Who to notify first" tall />
-        <Field label="Where will / attorney contacts are" />
-        <Field label="Employer / benefits to contact" />
-        <Field label="Accounts that need immediate attention" tall />
+        <Field id="plan-notify" label="Who to notify first" tall />
+        <Field id="plan-will" label="Where will / attorney contacts are" />
+        <Field id="plan-employer" label="Employer / benefits to contact" />
+        <Field id="plan-accounts" label="Accounts that need immediate attention" tall />
         <h3>House fire / evacuation</h3>
-        <Field label="Meetup location (near + far)" />
-        <Field label="Go-bag location" />
-        <Field label="What to grab if there are 60 seconds" tall />
+        <Field id="plan-meetup" label="Meetup location (near + far)" />
+        <Field id="plan-gobag" label="Go-bag location" />
+        <Field id="plan-grab" label="What to grab if there are 60 seconds" tall />
         <h3>Natural disaster / extended outage</h3>
-        <Field label="Out-of-area contact" />
-        <Field label="Water / food / radio / cash plan" tall />
-        <Field label="Local emergency services notes" />
+        <Field id="plan-outoftown" label="Out-of-area contact" />
+        <Field id="plan-supplies" label="Water / food / radio / cash plan" tall />
+        <Field id="plan-services" label="Local emergency services notes" />
       </section>
 
       <section className="page-break">
         <SectionTitle title={label('notes') + '. Extra notes'} />
-        <p className="lede">Blank space for anything that did not fit above.</p>
-        <Field label="Notes" xTall />
-        <Field label="" xTall />
-        <Field label="" xTall />
-        <Field label="" xTall />
+        <p className="lede">Space for anything that did not fit above. The app does not keep this after you close the tab.</p>
+        <Field id="notes-1" label="Notes" xTall />
+        <Field id="notes-2" label="" xTall />
+        <Field id="notes-3" label="" xTall />
+        <Field id="notes-4" label="" xTall />
         <ul className="checklist">
-          <li>
-            <span className="box" />
-            <span>Beneficiaries / nominees reviewed</span>
-          </li>
-          <li>
-            <span className="box" />
-            <span>Emergency contacts still correct</span>
-          </li>
-          <li>
-            <span className="box" />
-            <span>Each member section still accurate</span>
-          </li>
-          <li>
-            <span className="box" />
-            <span>Trusted person still knows where this book is</span>
-          </li>
-          <li>
-            <span className="box" />
-            <span>Date on cover updated</span>
-          </li>
+          <CheckItem id="review-nominees" label="Beneficiaries / nominees reviewed" />
+          <CheckItem id="review-contacts" label="Emergency contacts still correct" />
+          <CheckItem id="review-members" label="Each member section still accurate" />
+          <CheckItem id="review-keeper" label="Trusted person still knows where this book is" />
+          <CheckItem id="review-date" label="Date on cover updated" />
         </ul>
       </section>
     </>

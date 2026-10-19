@@ -31,6 +31,14 @@ export type HandbookConfig = {
   household: HouseholdCounts;
 };
 
+export type HandbookData = {
+  schemaVersion: 1;
+  config: HandbookConfig;
+  fields: Record<string, string>;
+  /** Field ids whose values are passwords, PINs, or equivalent secrets. */
+  secretFields: string[];
+};
+
 export type CountField<K extends string> = {
   key: K;
   label: string;
