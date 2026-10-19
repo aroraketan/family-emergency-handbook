@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { totalSlots } from './defaults';
+import { useEffect, useRef, useState } from 'react';
 import { Handbook } from './handbook';
 import {
   downloadSavedHandbook,
@@ -36,8 +35,6 @@ function AppShell() {
   const [loadError, setLoadError] = useState('');
   const [loadBusy, setLoadBusy] = useState(false);
   const [fileError, setFileError] = useState('');
-
-  const slots = useMemo(() => totalSlots(data.config), [data.config]);
 
   const closeSave = () => {
     setSaveOpen(false);
@@ -187,18 +184,9 @@ function AppShell() {
               </button>
             </>
           ) : (
-            <>
-              <button type="button" data-testid="save-data" onClick={requestSave}>
-                Save JSON
-              </button>
-              <button
-                type="button"
-                className="primary"
-                onClick={() => setView('handbook')}
-              >
-                Generate ({slots} slots)
-              </button>
-            </>
+            <button type="button" data-testid="save-data" onClick={requestSave}>
+              Save JSON
+            </button>
           )}
         </div>
       </header>

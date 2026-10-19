@@ -41,7 +41,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - `store.tsx` — root in-memory `HandbookData` store. Owns member/count config, every handbook field, and which fields are secrets.
 - `save-data.ts` — builds and downloads the JSON file, and reads a saved file back into `HandbookData`. Encrypts and decrypts the whole handbook with AES-GCM and a user passphrase. The download name includes the local date and time.
 - `wizard.tsx` — multi-step count wizard (`data-testid="count-wizard"`).
-- `App.tsx` — home / wizard / handbook views. The opening screen is two choices: Load JSON or Start blank. The handbook toolbar has Edit setup / Reset / Save JSON / Print. Load JSON is only on the opening screen. Reset clears records and config and returns there. Save and load passphrase fields are focused when those dialogs open.
+- `App.tsx` — home / wizard / handbook views. The opening screen is two choices: Load JSON or Start blank. The setup toolbar has Save JSON. The handbook toolbar has Edit setup / Reset / Save JSON / Print. The wizard's last step generates the handbook. Load JSON is only on the opening screen. Reset clears records and config and returns there. Save and load passphrase fields are focused when those dialogs open.
 - `handbook.tsx` — composes `handbook-life.tsx` (members, contacts, home, vehicles) and `handbook-assets.tsx` (subscriptions, pets, etc.).
 - `handbook-member.tsx` — per-member section; `handbook-parts.tsx` — shared `Field`, `DetailInput`, `BlankRows`, `SectionTitle`, etc.
 - `section-numbers.ts` — dynamic section numbering; `styles.ts` — screen + print CSS (`APP_CSS`).
@@ -67,6 +67,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-19** — Saved files are schema version 1 only. The loader no longer accepts earlier file shapes.
 - **2026-10-19** — The opening screen is only two choices: Load JSON or Start blank. The household form appears after Start blank.
 - **2026-10-19** — Removed Load JSON from the handbook toolbar. Renamed Edit counts to Edit setup. Save and load passphrase fields focus when the dialog opens.
+- **2026-10-19** — Removed the setup-screen Generate shortcut. The wizard's last step creates the handbook.
 
 ## Known leftovers / open items
 
