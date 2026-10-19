@@ -222,7 +222,7 @@ export const APP_CSS = `
     background: var(--paper);
     box-shadow: 0 8px 28px rgba(26, 31, 36, 0.18);
     color: var(--ink);
-    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-family: "Uber Move Text", "Helvetica Neue", Arial, sans-serif;
     font-size: 11pt;
   }
 
@@ -283,7 +283,8 @@ export const APP_CSS = `
     border-bottom: 1px solid var(--line);
     background: rgba(255, 255, 255, 0.72);
     color: inherit;
-    font: inherit;
+    font-family: "Uber Move Text", "Helvetica Neue", Arial, sans-serif;
+    font-size: inherit;
     line-height: 1.35;
     padding: 0.15rem 0.2rem;
     margin: 0;

@@ -68,6 +68,8 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-19** — The opening screen is only two choices: Load JSON or Start blank. The household form appears after Start blank.
 - **2026-10-19** — Removed Load JSON from the handbook toolbar. Renamed Edit counts to Edit setup. Save and load passphrase fields focus when the dialog opens.
 - **2026-10-19** — Removed the setup-screen Generate shortcut. The wizard's last step creates the handbook.
+- **2026-10-19** — Handbook inputs use the sans-serif text face. The printed page body stays serif.
+- **2026-10-19** — The handbook body uses the same sans-serif text face as the inputs and headings.
 
 ## Known leftovers / open items
 
