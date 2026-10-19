@@ -40,7 +40,8 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - `defaults.ts` — count field definitions (labels, min/max), default counts, `resizeMembers`, `totalSlots`.
 - `store.tsx` — root in-memory `HandbookData` store. Owns member/count config, every handbook field, and which fields are secrets.
 - `save-data.ts` — builds and downloads the JSON file, and reads a saved file back into `HandbookData`. Encrypts and decrypts the whole handbook with AES-GCM and a user passphrase. The download name includes the local date and time.
-- `wizard.tsx` — multi-step count wizard (`data-testid="count-wizard"`).
+- `wizard.tsx` — multi-step count wizard (`data-testid="count-wizard"`). Step content slides between household size, each member, and shared items. The footer stays at the bottom of the card.
+- `stepper.tsx` — reusable step indicator (`data-testid="stepper"`).
 - `App.tsx` — home / wizard / handbook views. The opening screen is two choices: Load JSON or Start blank. The setup toolbar has Save JSON. The handbook toolbar has Edit setup / Reset / Save JSON / Print. The wizard's last step generates the handbook. Load JSON is only on the opening screen. Reset clears records and config and returns there. Save and load passphrase fields are focused when those dialogs open.
 - `handbook.tsx` — composes `handbook-life.tsx` (members, contacts, home, vehicles) and `handbook-assets.tsx` (subscriptions, pets, etc.).
 - `handbook-member.tsx` — per-member section; `handbook-parts.tsx` — shared `Field`, `DetailInput`, `BlankRows`, `SectionTitle`, etc.
@@ -73,6 +74,9 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-19** — Removed company font names. Body, headings, and inputs use Helvetica Neue, Arial, sans-serif.
 - **2026-10-19** — The handbook card shadow is screen-only. Print drops the shadow and the floating page width.
 - **2026-10-19** — Print uses `@page { margin: 0; padding: 8mm 0 }`. A zero page margin leaves no room for the browser header and footer, and the paper background covers the whole sheet when Background graphics is on.
+- **2026-10-19** — Each wizard member step shows a person banner and slides in, so the next person is distinct from the previous counts.
+- **2026-10-19** — Replaced the wizard step label with a clickable stepper: Household size, each member, Shared items. Done steps show a check. No new dependency.
+- **2026-10-19** — The stepper lives in `stepper.tsx`. Every wizard step slides, including household size and shared items. The wizard footer stays at the bottom of the card.
 
 ## Known leftovers / open items
 

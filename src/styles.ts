@@ -30,6 +30,12 @@ export const APP_CSS = `
   }
 
   .app-shell { min-height: 100vh; }
+  .app-shell:has(.wizard) {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
   .toolbar {
     position: sticky;
@@ -151,11 +157,17 @@ export const APP_CSS = `
   }
 
   .wizard {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    width: min(920px, calc(100% - 32px));
     max-width: 920px;
-    margin: 24px auto 48px;
-    padding: 28px 28px 36px;
+    margin: 16px auto;
+    padding: 28px 28px 20px;
     background: var(--paper);
     box-shadow: 0 8px 28px rgba(26, 31, 36, 0.16);
+    overflow: hidden;
   }
 
   .wizard h1 {
@@ -166,6 +178,122 @@ export const APP_CSS = `
   }
 
   .wizard .lede { color: var(--muted); margin: 0 0 18px; max-width: 40rem; }
+
+  .stepper-nav {
+    overflow-x: auto;
+    margin: 8px 0 16px;
+    padding: 10px 4px 4px;
+    scroll-margin-top: 84px;
+  }
+  .stepper {
+    display: flex;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .stepper-item {
+    position: relative;
+    flex: 1 0 96px;
+    min-width: 96px;
+  }
+  .stepper-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: calc(50% + 18px);
+    right: calc(-50% + 18px);
+    height: 2px;
+    background: var(--rule);
+  }
+  .stepper-item.done:not(:last-child)::after { background: var(--accent); }
+  .wizard .stepper-item button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 0 4px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .wizard .stepper-item button:hover { background: transparent; color: var(--ink); }
+  .stepper-dot {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--rule);
+    border-radius: 50%;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+  }
+  .stepper-label {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 12px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .stepper-item.done .stepper-dot {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+  .stepper-item.current .stepper-dot {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(44, 74, 62, 0.15);
+  }
+  .wizard .stepper-item.current button { color: var(--ink); font-weight: 700; }
+
+  .wizard-stage {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+  .wizard-step.forward { animation: wizard-in-forward 320ms ease; }
+  .wizard-step.back { animation: wizard-in-back 320ms ease; }
+
+  @keyframes wizard-in-forward {
+    from { opacity: 0; transform: translateX(36px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes wizard-in-back {
+    from { opacity: 0; transform: translateX(-36px); }
+    to { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wizard-step.forward, .wizard-step.back { animation: none; }
+  }
+
+  .member-banner {
+    margin: 0 0 18px;
+    padding: 14px 16px;
+    background: rgba(44, 74, 62, 0.08);
+    border-left: 4px solid var(--accent);
+  }
+  .member-kicker {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .member-name {
+    display: block;
+    margin-top: 4px;
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .member-banner p { margin: 8px 0 0; color: var(--muted); }
 
   .note {
     border-left: 3px solid var(--warn);
@@ -204,13 +332,15 @@ export const APP_CSS = `
 
   .wizard-footer {
     display: flex;
+    flex: none;
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
     justify-content: space-between;
-    margin-top: 24px;
+    margin-top: 0;
     padding-top: 16px;
     border-top: 1px solid var(--rule);
+    background: var(--paper);
   }
 
   .summary { color: var(--muted); font-size: 13px; }
@@ -408,6 +538,8 @@ export const APP_CSS = `
       resize: none;
       overflow: hidden;
     }
+    .app-shell:has(.wizard) { height: auto; overflow: visible; }
+    .wizard, .wizard-stage { height: auto; overflow: visible; }
     ${at}page {
       size: letter;
       margin: 0;

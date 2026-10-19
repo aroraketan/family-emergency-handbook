@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   HOUSEHOLD_COUNT_FIELDS,
   MEMBER_COUNT_FIELDS,
@@ -6,6 +7,7 @@ import {
   resizeMembers,
   totalSlots,
 } from './defaults';
+import { Stepper } from './stepper';
 import type { HandbookConfig, WizardStep } from './types';
 
 type Props = {
@@ -64,8 +66,11 @@ export function Wizard({
 }: Props) {
   const memberCount = config.members.length;
   const slots = totalSlots(config);
+  const [direction, setDirection] = useState<'forward' | 'back'>('forward');
+  const stepKey = step.kind === 'member' ? 'member-' + step.index : step.kind;
 
   const goNext = () => {
+    setDirection('forward');
     if (step.kind === 'size') {
       onStepChange({ kind: 'member', index: 0 });
       return;
@@ -82,6 +87,7 @@ export function Wizard({
   };
 
   const goBack = () => {
+    setDirection('back');
     if (step.kind === 'member') {
       if (step.index === 0) {
         onStepChange({ kind: 'size' });
@@ -95,19 +101,34 @@ export function Wizard({
     }
   };
 
-  const stepLabel =
+  const stepItems: { label: string; target: WizardStep }[] = [
+    { label: 'Household size', target: { kind: 'size' } },
+    ...config.members.map((member, index) => ({
+      label: member.label,
+      target: { kind: 'member', index } as WizardStep,
+    })),
+    { label: 'Shared items', target: { kind: 'household' } },
+  ];
+  const currentStep =
     step.kind === 'size'
-      ? 'Step 1 — Household size'
+      ? 0
       : step.kind === 'member'
-        ? 'Step ' +
-          (step.index + 2) +
-          ' — Counts for ' +
-          config.members[step.index].label
-        : 'Step ' + (memberCount + 2) + ' — Shared household items';
+        ? step.index + 1
+        : memberCount + 1;
 
   return (
     <section className="wizard" data-testid="count-wizard">
       <h1>Family Emergency Handbook</h1>
+      <Stepper
+        label="Setup steps"
+        items={stepItems}
+        current={currentStep}
+        onSelect={(index) => {
+          if (index === currentStep) return;
+          setDirection(index > currentStep ? 'forward' : 'back');
+          onStepChange(stepItems[index].target);
+        }}
+      />
       <p className="lede">
         First set how many people are in the household. Then enter account and
         asset counts for each person. Shared items (home, contacts, pets) come
@@ -119,10 +140,8 @@ export function Wizard({
         upload a filled PDF.
       </div>
 
-      <p className="summary" data-testid="wizard-step-label">
-        {stepLabel}
-      </p>
-
+      <div className="wizard-stage">
+      <div key={stepKey} className={'wizard-step ' + direction} data-testid="wizard-step-panel">
       {step.kind === 'size' ? (
         <>
           <div className="field" style={{ maxWidth: 280, marginBottom: 16 }}>
@@ -178,19 +197,34 @@ export function Wizard({
       ) : null}
 
       {step.kind === 'member' ? (
-        <CountGrid
-          idPrefix={'m' + step.index}
-          fields={MEMBER_COUNT_FIELDS}
-          values={config.members[step.index].counts}
-          onChange={(key, value) => {
-            const members = config.members.map((member, index) =>
-              index === step.index
-                ? { ...member, counts: { ...member.counts, [key]: value } }
-                : member
-            );
-            onConfigChange({ ...config, members });
-          }}
-        />
+        <div data-testid="member-step">
+          <div className="member-banner">
+            <span className="member-kicker">
+              Person {step.index + 1} of {memberCount}
+            </span>
+            <span className="member-name" data-testid="member-step-name">
+              {config.members[step.index].label}
+            </span>
+            <p>
+              {step.index + 1 < memberCount
+                ? 'These counts are only for this person. Next opens the following person.'
+                : 'These counts are only for this person. Next opens the shared household items.'}
+            </p>
+          </div>
+          <CountGrid
+            idPrefix={'m' + step.index}
+            fields={MEMBER_COUNT_FIELDS}
+            values={config.members[step.index].counts}
+            onChange={(key, value) => {
+              const members = config.members.map((member, index) =>
+                index === step.index
+                  ? { ...member, counts: { ...member.counts, [key]: value } }
+                  : member
+              );
+              onConfigChange({ ...config, members });
+            }}
+          />
+        </div>
       ) : null}
 
       {step.kind === 'household' ? (
@@ -206,6 +240,8 @@ export function Wizard({
           }}
         />
       ) : null}
+      </div>
+      </div>
 
       <div className="wizard-footer">
         <p className="summary" data-testid="slot-summary" data-total={slots}>
