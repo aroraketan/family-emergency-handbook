@@ -4,11 +4,11 @@ Running context for future agent sessions. Update this file after every major ch
 
 ## Purpose
 
-A local-only React app that builds a **blank, printable family emergency handbook**. The user prints it, handwrites all details (including passwords) on the paper master copy, and stores it offline in a secure place.
+A React app that builds a **blank, printable family emergency handbook**. The user prints it, handwrites all details (including passwords) on the paper master copy, and stores it offline in a secure place. The blank app is hosted on personal GitHub Pages.
 
 ## Hard constraints (from the user)
 
-- **Local only.** Never deploy to Uber infra (vibe-mcp, TerraBLOB, vibe-apps repo, etc.). Do not use vibe plugin skills to build/deploy this project.
+- **Not on Uber infra.** Never deploy to vibe-mcp, TerraBLOB, or the vibe-apps repo. Do not use vibe plugin skills to build or deploy this project. The blank app is published on the user's personal GitHub Pages site.
 - **No secrets in the browser.** The form only collects counts and optional member names; all sensitive data is handwritten on paper.
 - Do not commit or sync a filled PDF to cloud storage.
 - Indian context: identity docs include **Aadhaar** and **PAN** (not SSN/Tax ID).
@@ -19,7 +19,9 @@ A local-only React app that builds a **blank, printable family emergency handboo
 - Dependencies come from the public npm registry. Project `.npmrc` sets `registry=https://registry.npmjs.org/`, and `package-lock.json` resolved URLs point there too.
 - `npm run dev` → http://localhost:5173, then **Print / Save PDF** in the browser.
 - `npm run build` → `dist/` (`npx tsc --noEmit` for type-checking).
-- Private Git repo on the personal account `aroraketan`: https://github.com/aroraketan/family-emergency-handbook
+- Public Git repo on the personal account `aroraketan`: https://github.com/aroraketan/family-emergency-handbook
+- GitHub Pages (free plan requires a public repo): https://aroraketan.github.io/family-emergency-handbook/
+- Pages deploys from `.github/workflows/pages.yml` on pushes to `main`. The workflow sets `VITE_BASE_PATH` so Vite assets resolve under the project site path. Local `npm run dev` stays at `/`.
 
 ## App flow
 
@@ -48,6 +50,7 @@ Any block whose count is 0 is omitted from the PDF; section numbers are computed
 - **2026-10-19** — Installed Node 26 via Homebrew (it was missing). Retargeted all 119 `package-lock.json` resolved URLs from `unpm.uberinternal.com` to `registry.npmjs.org` so install works without Uber npm auth. Dev server runs at http://127.0.0.1:5173.
 - **2026-10-19** — Added project `.npmrc` so this folder uses `https://registry.npmjs.org/` even when the user npm config points at Uber's registry.
 - **2026-10-19** — Created private GitHub repo `aroraketan/family-emergency-handbook` and pushed the local project.
+- **2026-10-19** — Made the repo public and added a GitHub Actions Pages workflow. Free GitHub Pages cannot publish a private repo. Site: https://aroraketan.github.io/family-emergency-handbook/
 
 ## Known leftovers / open items
 

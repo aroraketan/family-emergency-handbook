@@ -1,6 +1,8 @@
-# Family Emergency Handbook (local)
+# Family Emergency Handbook
 
-Personal printable emergency handbook builder. Runs **only on your machine** — not deployed to Uber vibe infra.
+Personal printable emergency handbook builder. The hosted site is a blank form. It is not deployed to Uber vibe infra.
+
+Live site: https://aroraketan.github.io/family-emergency-handbook/
 
 ## Run
 
