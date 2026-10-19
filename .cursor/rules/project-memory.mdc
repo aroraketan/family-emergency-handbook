@@ -1,0 +1,31 @@
+---
+description: Read and keep MEMORY.md updated with project context across sessions
+alwaysApply: true
+---
+
+# Project Memory
+
+`MEMORY.md` at the project root is the persistent context for this project.
+
+## At the start of a session
+
+Read `MEMORY.md` before making changes. Respect its **Hard constraints**: local only, never deploy to Uber/vibe infra, and no secrets in the browser.
+
+## After every major change
+
+Update `MEMORY.md` in the same turn, before you summarize the work. A major change includes:
+
+- new or removed features, wizard steps, count fields, or handbook sections
+- renamed fields or labels the user asked for (e.g. Tax ID → PAN)
+- changes to stack, dependencies, scripts, build, or project structure
+- new user preferences or constraints
+- resolved or newly discovered open items
+
+How to update:
+
+- Add a dated line under **History**, e.g. `- **2026-10-20** — Added a blood-group field to the member identity block.`
+- Edit **App flow**, **Code map**, or **Hard constraints** in place so they describe the current state, not past states.
+- Move finished items out of **Known leftovers / open items**.
+- Keep it concise: facts and decisions, not a transcript.
+
+Skip updates for trivial edits such as typo fixes, formatting, or refactors that change no behaviour.
