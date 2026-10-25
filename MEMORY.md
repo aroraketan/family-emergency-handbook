@@ -11,6 +11,7 @@ A React app that builds a printable family emergency handbook. Details can be ty
 - **Personal hosting only.** Never deploy to vibe-mcp, TerraBLOB, or the vibe-apps repo. Do not use vibe plugin skills to build or deploy this project. The blank app is published on the user's personal GitHub Pages site.
 - **No stored secrets.** The handbook accepts typed details so they can be printed. Typing passwords and PINs is allowed, but not recommended. Values live in React state for the open tab only: no localStorage, sessionStorage, cookies, URL, or server. **Save JSON** always asks for a passphrase and downloads a file the user chooses to keep. The whole handbook is one AES-GCM ciphertext; the key is derived with PBKDF2-SHA-256 (600,000 iterations). The download name includes the family name plus the local date and time. The passphrase is asked again on load and is not stored. Saved files are schema version 1 only. Refresh, close the tab, or Reset discards the in-app copy. Reset clears typed details and member names and counts, then returns to the opening screen. Do not commit or sync a filled PDF or saved JSON to cloud storage.
 - Indian context: identity docs include **Aadhaar** and **PAN** (not SSN/Tax ID).
+- **Git only.** Use git commands for this repo. Do not use the `gh` command.
 
 ## Stack and commands
 
@@ -81,6 +82,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-25** — Removed the crypto / digital assets block from each member's investments section.
 - **2026-10-25** — The saved JSON filename includes the household name from the cover, then the local date and time. An empty name is left out.
 - **2026-10-25** — Properties are a household count. Each one has its own address, keys, alarm, and Wi-Fi. Property 1 keeps the original home field ids. The single "other property" line is gone.
+- **2026-10-25** — Use git commands only for this repo. Do not use the gh command.
 
 ## Known leftovers / open items
 
