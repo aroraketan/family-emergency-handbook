@@ -38,6 +38,13 @@ export const MEMBER_COUNT_FIELDS: CountField<MemberCountKey>[] = [
     max: 40,
   },
   {
+    key: 'upiPins',
+    label: 'UPI IDs',
+    help: 'UPI ID, the app, and its PIN',
+    min: 0,
+    max: 20,
+  },
+  {
     key: 'fixedDeposits',
     label: 'Fixed deposits (FDs)',
     help: 'FDs in this person\'s name',
@@ -145,6 +152,7 @@ export const DEFAULT_MEMBER_COUNTS: MemberCounts = {
   debitCards: 1,
   creditCards: 2,
   appPins: 2,
+  upiPins: 2,
   fixedDeposits: 1,
   investments: 2,
   insurancePolicies: 2,

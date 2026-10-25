@@ -227,6 +227,32 @@ export function HandbookMemberSection({
         </>
       ) : null}
 
+      {c.upiPins > 0 ? (
+        <>
+          <h3>
+            UPI IDs
+            <span className="count-pill">({c.upiPins})</span>
+          </h3>
+          <table>
+            <thead>
+              <tr>
+                <th>UPI ID</th>
+                <th>App</th>
+                <th>PIN</th>
+              </tr>
+            </thead>
+            <tbody>
+              <BlankRows
+                count={c.upiPins}
+                columns={3}
+                idPrefix={memberKey + '-upi'}
+                secretColumns={[2]}
+              />
+            </tbody>
+          </table>
+        </>
+      ) : null}
+
       {c.fixedDeposits > 0 ? (
         <>
           <h3>
