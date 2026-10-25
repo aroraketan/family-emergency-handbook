@@ -28,7 +28,7 @@ A React app that builds a printable family emergency handbook. Details can be ty
 2. **Size step** — number of household members (1–12) plus optional names. Reached only after Start blank.
 3. **Member steps** — per-member counts: bank accounts, debit cards, credit cards, app PINs, FDs, investments, insurance, loans, digital accounts, medications, employers.
 4. **Household step** — shared counts: emergency contacts, neighbors, vehicles, utilities, subscriptions, pets.
-5. **Handbook view** — one full section per member (identity docs incl. Aadhaar/PAN plus three blank rows for extra documents, financial accounts, crypto, insurance, core digital access, medical), followed by shared household sections. Every former blank line is a text field.
+5. **Handbook view** — one full section per member (identity docs incl. Aadhaar/PAN plus three blank rows for extra documents, financial accounts, insurance, core digital access, medical), followed by shared household sections. Every former blank line is a text field.
 
 Any block whose count is 0 is omitted from the printout; section numbers are computed dynamically.
 
@@ -78,6 +78,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-19** — Replaced the wizard step label with a clickable stepper: Household size, each member, Shared items. Done steps show a check. No new dependency.
 - **2026-10-19** — The stepper lives in `stepper.tsx`. Every wizard step slides, including household size and shared items. The wizard footer stays at the bottom of the card.
 - **2026-10-25** — Split debit cards from credit cards. Debit cards sit between bank accounts and credit cards. The bank-account column is Password / App PIN. App PINs are their own count and handbook section.
+- **2026-10-25** — Removed the crypto / digital assets block from each member's investments section.
 
 ## Known leftovers / open items
 

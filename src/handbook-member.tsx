@@ -280,13 +280,6 @@ export function HandbookMemberSection({
               />
             </tbody>
           </table>
-          <h3>Crypto / digital assets (if any)</h3>
-          <div className="row-2">
-            <Field id={memberKey + '-crypto-user'} label="Exchange — username / email" />
-            <Field id={memberKey + '-crypto-password'} label="Exchange — password" secret />
-          </div>
-          <Field id={memberKey + '-crypto-wallet'} label="Hardware wallet location" />
-          <Field id={memberKey + '-crypto-seed'} label="Seed phrase / recovery words" xTall secret />
         </>
       ) : null}
 
