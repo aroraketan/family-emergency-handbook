@@ -16,6 +16,8 @@ import type {
 
 const PBKDF2_ITERATIONS = 600_000;
 export const PASSPHRASE_MIN_LENGTH = 8;
+export const HANDBOOK_FILE_EXTENSION = '.feh';
+export const HANDBOOK_LOAD_EXTENSIONS = [HANDBOOK_FILE_EXTENSION, '.json'] as const;
 const MAX_SAVE_CHARS = 2_000_000;
 
 export class LoadError extends Error {
@@ -114,7 +116,7 @@ export function handbookFileName(date = new Date(), familyName = ''): string {
     pad(date.getSeconds());
   const slug = familySlug(familyName);
   const family = slug ? '-' + slug : '';
-  return 'family-emergency-handbook' + family + '-' + stamp + '.json';
+  return 'family-emergency-handbook' + family + '-' + stamp + HANDBOOK_FILE_EXTENSION;
 }
 
 export async function buildSavedHandbook(
@@ -235,7 +237,7 @@ export function readSavedHandbook(text: string): SavedHandbook {
   try {
     parsed = JSON.parse(text);
   } catch {
-    throw new LoadError('That file is not valid JSON.');
+    throw new LoadError('That file could not be read.');
   }
   if (!isRecord(parsed) || parsed.schemaVersion !== 1) {
     throw new LoadError('This file is not a saved family emergency handbook.');
@@ -280,7 +282,7 @@ export async function downloadSavedHandbook(
 ): Promise<void> {
   const saved = await buildSavedHandbook(data, passphrase);
   const blob = new Blob([JSON.stringify(saved, null, 2) + '\n'], {
-    type: 'application/json',
+    type: 'application/octet-stream',
   });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');

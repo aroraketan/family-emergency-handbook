@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Handbook } from './handbook';
 import {
   downloadSavedHandbook,
+  HANDBOOK_LOAD_EXTENSIONS,
   handbookFromSaved,
   LoadError,
   PASSPHRASE_MIN_LENGTH,
@@ -95,6 +96,12 @@ function AppShell() {
   };
 
   const onFileChosen = async (file: File) => {
+    const name = file.name.toLowerCase();
+    if (!HANDBOOK_LOAD_EXTENSIONS.some((extension) => name.endsWith(extension))) {
+      setFileError('Choose a ' + HANDBOOK_LOAD_EXTENSIONS.join(' or ') + ' file.');
+      return;
+    }
+    setFileError('');
     if (Object.keys(data.fields).length > 0) {
       const replace = window.confirm(
         'Loading a file replaces the details currently on screen. Continue?',
@@ -195,7 +202,7 @@ function AppShell() {
       <input
         ref={fileInput}
         type="file"
-        accept="application/json,.json"
+        accept={HANDBOOK_LOAD_EXTENSIONS.join(',')}
         hidden
         data-testid="load-file"
         onChange={(event) => {
