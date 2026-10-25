@@ -37,13 +37,13 @@ export function DetailInput({
     setField(id, event.target.value, { secret });
   };
 
-  if (tall || xTall) {
+  if (tall || xTall || plain) {
     return (
       <textarea
         {...quietInput}
         id={id}
         className={className}
-        rows={xTall ? 4 : 2}
+        rows={xTall ? 4 : tall ? 2 : 1}
         value={data.fields[id] ?? ''}
         onChange={onChange}
       />

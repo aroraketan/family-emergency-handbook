@@ -83,6 +83,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-25** — The saved JSON filename includes the household name from the cover, then the local date and time. An empty name is left out.
 - **2026-10-25** — Properties are a household count. Each one has its own address, keys, alarm, and Wi-Fi. Property 1 keeps the original home field ids. The single "other property" line is gone.
 - **2026-10-25** — Use git commands only for this repo. Do not use the gh command.
+- **2026-10-25** — Table cells wrap long text inside the page. Columns size to their content, so a short column stays narrow.
 
 ## Known leftovers / open items
 

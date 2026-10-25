@@ -429,7 +429,12 @@ export const APP_CSS = `
     border-bottom: none;
     background: transparent;
     min-height: 1.2rem;
+    min-width: 0;
+    max-width: 100%;
     resize: none;
+    overflow: hidden;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
     padding: 0;
   }
   .sheet .fill:focus { background: #fff; }
@@ -446,6 +451,7 @@ export const APP_CSS = `
 
   table {
     width: 100%;
+    table-layout: auto;
     border-collapse: collapse;
     margin: 0.35rem 0 0.7rem;
     font-size: 0.92rem;
@@ -453,8 +459,11 @@ export const APP_CSS = `
   th, td {
     border: 1px solid var(--rule);
     padding: 0.35rem 0.4rem;
-    vertical-align: bottom;
+    vertical-align: top;
     text-align: left;
+    width: max-content;
+    max-width: 36ch;
+    overflow-wrap: break-word;
   }
   th {
     font-family: "Helvetica Neue", Arial, sans-serif;
@@ -465,7 +474,7 @@ export const APP_CSS = `
     background: rgba(44, 74, 62, 0.06);
     font-weight: 600;
   }
-  td { height: 1.55rem; }
+  td { min-height: 1.55rem; }
 
   .cover {
     min-height: 9.2in;
