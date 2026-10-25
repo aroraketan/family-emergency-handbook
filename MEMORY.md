@@ -27,7 +27,7 @@ A React app that builds a printable family emergency handbook. Details can be ty
 1. **Opening screen** — two choices: **Load JSON** or **Start blank**.
 2. **Size step** — number of household members (1–12) plus optional names. Reached only after Start blank.
 3. **Member steps** — per-member counts: bank accounts, debit cards, credit cards, app PINs, FDs, investments, insurance, loans, digital accounts, medications, employers.
-4. **Household step** — shared counts: emergency contacts, neighbors, vehicles, utilities, subscriptions, pets.
+4. **Household step** — shared counts: emergency contacts, neighbors, vehicles, properties, utilities, subscriptions, pets. The first property is the primary residence.
 5. **Handbook view** — one full section per member (identity docs incl. Aadhaar/PAN plus three blank rows for extra documents, financial accounts, insurance, core digital access, medical), followed by shared household sections. Every former blank line is a text field.
 
 Any block whose count is 0 is omitted from the printout; section numbers are computed dynamically.
@@ -80,6 +80,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-25** — Split debit cards from credit cards. Debit cards sit between bank accounts and credit cards. The bank-account column is Password / App PIN. App PINs are their own count and handbook section.
 - **2026-10-25** — Removed the crypto / digital assets block from each member's investments section.
 - **2026-10-25** — The saved JSON filename includes the household name from the cover, then the local date and time. An empty name is left out.
+- **2026-10-25** — Properties are a household count. Each one has its own address, keys, alarm, and Wi-Fi. Property 1 keeps the original home field ids. The single "other property" line is gone.
 
 ## Known leftovers / open items
 

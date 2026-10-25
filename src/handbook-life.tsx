@@ -2,6 +2,7 @@ import {
   BlankRows,
   Field,
   NumberedBlankRows,
+  PropertyBlock,
   SectionTitle,
   VehicleBlock,
 } from './handbook-parts';
@@ -13,6 +14,7 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
   const hh = config.household;
   const showContacts = hh.emergencyContacts > 0 || hh.neighbors > 0;
   const showVehicles = hh.vehicles > 0;
+  const showHome = hh.properties > 0 || hh.utilities > 0;
 
   const memberFlags: Record<string, boolean> = { howTo: true };
   config.members.forEach((_, index) => {
@@ -20,12 +22,13 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
   });
   memberFlags.contacts = showContacts;
   memberFlags.medical = true;
-  memberFlags.home = true;
+  memberFlags.home = showHome;
   memberFlags.vehicles = showVehicles;
   memberFlags.legal = true;
 
   const section = createSectionNumbers(memberFlags);
   const vehicles = Array.from({ length: hh.vehicles }, (_, i) => i + 1);
+  const properties = Array.from({ length: hh.properties }, (_, i) => i + 1);
 
   return (
     <>
@@ -173,23 +176,15 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
         </div>
       </section>
 
+      {showHome ? (
       <section className="page-break">
-        <SectionTitle title={section.home + '. Home and property'} />
-        <Field id="home-address" label="Primary residence address" />
-        <div className="row-2">
-          <Field id="home-own" label="Own / rent" />
-          <Field id="home-landlord" label="Landlord / HOA / property mgmt" />
-          <Field id="home-landlord-phone" label="Landlord / HOA phone" />
-          <Field id="home-mortgage" label="Mortgage lender / servicer" />
-          <Field id="home-spare-key" label="Spare key location" />
-          <Field id="home-other-keys" label="Who else has a key" />
-          <Field id="home-alarm-vendor" label="Alarm / smart lock — vendor" />
-          <Field id="home-alarm-code" label="Alarm / door code" secret />
-          <Field id="home-safe" label="Safe / lockbox location" />
-          <Field id="home-safe-code" label="Safe combo / key code" secret />
-          <Field id="home-wifi" label="Wi-Fi network name (SSID)" />
-          <Field id="home-wifi-password" label="Wi-Fi password" secret />
-        </div>
+        <SectionTitle
+          title={section.home + '. Home and property'}
+          count={hh.properties > 0 ? hh.properties : undefined}
+        />
+        {properties.map((n) => (
+          <PropertyBlock key={n} index={n} />
+        ))}
         {hh.utilities > 0 ? (
           <>
             <h3>
@@ -217,8 +212,8 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
             </table>
           </>
         ) : null}
-        <Field id="home-other-property" label="Other property (second home / land / docs location)" tall />
       </section>
+      ) : null}
 
       {showVehicles ? (
         <section className="page-break">
@@ -258,7 +253,7 @@ export function countLifeSections(config: HandbookConfig): number {
     config.members.length +
     (hh.emergencyContacts > 0 || hh.neighbors > 0 ? 1 : 0) +
     1 + // medical
-    1 + // home
+    (hh.properties > 0 || hh.utilities > 0 ? 1 : 0) + // home
     (hh.vehicles > 0 ? 1 : 0) +
     1 // legal
   );

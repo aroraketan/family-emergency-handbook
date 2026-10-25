@@ -15,6 +15,7 @@ export type HouseholdCountKey =
   | 'emergencyContacts'
   | 'neighbors'
   | 'vehicles'
+  | 'properties'
   | 'utilities'
   | 'subscriptions'
   | 'pets';

@@ -111,6 +111,13 @@ export const HOUSEHOLD_COUNT_FIELDS: CountField<HouseholdCountKey>[] = [
     max: 15,
   },
   {
+    key: 'properties',
+    label: 'Properties',
+    help: 'Homes, land, or other places. The first is the primary residence',
+    min: 0,
+    max: 8,
+  },
+  {
     key: 'utilities',
     label: 'Utility / home service accounts',
     help: 'Electric, gas, water, internet, trash',
@@ -151,6 +158,7 @@ export const DEFAULT_HOUSEHOLD_COUNTS: HouseholdCounts = {
   emergencyContacts: 5,
   neighbors: 2,
   vehicles: 1,
+  properties: 1,
   utilities: 5,
   subscriptions: 3,
   pets: 0,
