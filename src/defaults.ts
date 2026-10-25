@@ -12,7 +12,7 @@ export const MEMBER_COUNT_FIELDS: CountField<MemberCountKey>[] = [
   {
     key: 'bankAccounts',
     label: 'Bank / credit union accounts',
-    help: 'Accounts in this person\'s name (or primarily theirs)',
+    help: 'Accounts in this person\'s name. The UPI PIN belongs to the account',
     min: 0,
     max: 40,
   },
@@ -40,7 +40,7 @@ export const MEMBER_COUNT_FIELDS: CountField<MemberCountKey>[] = [
   {
     key: 'upiPins',
     label: 'UPI IDs',
-    help: 'UPI ID, the app, and its PIN',
+    help: 'UPI ID and the app. Several IDs can share one account PIN',
     min: 0,
     max: 20,
   },

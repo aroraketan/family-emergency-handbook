@@ -133,14 +133,15 @@ export function HandbookMemberSection({
                 <th>Account ending / nickname</th>
                 <th>Username / customer ID</th>
                 <th>Password / App PIN</th>
+                <th>UPI PIN</th>
               </tr>
             </thead>
             <tbody>
               <BlankRows
                 count={c.bankAccounts}
-                columns={5}
+                columns={6}
                 idPrefix={memberKey + '-banks'}
-                secretColumns={[4]}
+                secretColumns={[4, 5]}
               />
             </tbody>
           </table>
@@ -238,15 +239,13 @@ export function HandbookMemberSection({
               <tr>
                 <th>UPI ID</th>
                 <th>App</th>
-                <th>PIN</th>
               </tr>
             </thead>
             <tbody>
               <BlankRows
                 count={c.upiPins}
-                columns={3}
+                columns={2}
                 idPrefix={memberKey + '-upi'}
-                secretColumns={[2]}
               />
             </tbody>
           </table>

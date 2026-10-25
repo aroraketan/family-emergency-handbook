@@ -87,6 +87,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-25** — Each property records address, owned or rented, type, title deed location, owner, and Wi-Fi. Owner details is a text area for name and contact details. Landlord, keys, alarm, and safe fields are gone.
 - **2026-10-25** — Utilities and services sit on each property. The household utilities count is the number of rows per property. Property 1 keeps the `home-utilities` field ids.
 - **2026-10-25** — Each member has a UPI section: UPI ID, app, and PIN. The PIN is a secret. Older saved files missing the count default to 2.
+- **2026-10-25** — The UPI PIN is recorded on the bank account, once per account. UPI ID rows list the ID and the app only.
 - **2026-10-25** — The save and load buttons are Save encrypted file and Load saved file. New downloads use the `.feh` extension. The file picker allows only `.feh` and `.json`, and any other file is refused.
 
 ## Known leftovers / open items
