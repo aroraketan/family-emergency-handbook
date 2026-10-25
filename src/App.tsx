@@ -143,7 +143,7 @@ function AppShell() {
       <header className="toolbar no-print">
         <p>
           Type details to print them. Passwords and PINs may be typed, but that is
-          not recommended. Save JSON always asks for a passphrase and encrypts the
+          not recommended. Save encrypted file always asks for a passphrase and encrypts the
           whole file. Each download has its own name. The app keeps nothing after
           a refresh.
         </p>
@@ -172,7 +172,7 @@ function AppShell() {
                 Reset
               </button>
               <button type="button" data-testid="save-data" onClick={requestSave}>
-                Save JSON
+                Save encrypted file
               </button>
               <button
                 type="button"
@@ -185,7 +185,7 @@ function AppShell() {
             </>
           ) : (
             <button type="button" data-testid="save-data" onClick={requestSave}>
-              Save JSON
+              Save encrypted file
             </button>
           )}
         </div>
@@ -275,7 +275,7 @@ function HomeChoices({ onLoad, onStart }: { onLoad: () => void; onStart: () => v
       </p>
       <div className="choice-row">
         <button type="button" className="choice" data-testid="load-data-start" onClick={onLoad}>
-          <span className="choice-title">Load JSON</span>
+          <span className="choice-title">Load saved file</span>
           <span className="choice-help">
             Open a handbook you already saved. You will need its passphrase.
           </span>

@@ -9,7 +9,7 @@ A React app that builds a printable family emergency handbook. Details can be ty
 ## Hard constraints (from the user)
 
 - **Personal hosting only.** Never deploy to vibe-mcp, TerraBLOB, or the vibe-apps repo. Do not use vibe plugin skills to build or deploy this project. The blank app is published on the user's personal GitHub Pages site.
-- **No stored secrets.** The handbook accepts typed details so they can be printed. Typing passwords and PINs is allowed, but not recommended. Values live in React state for the open tab only: no localStorage, sessionStorage, cookies, URL, or server. **Save JSON** always asks for a passphrase and downloads a file the user chooses to keep. The whole handbook is one AES-GCM ciphertext; the key is derived with PBKDF2-SHA-256 (600,000 iterations). The download name includes the family name plus the local date and time. The passphrase is asked again on load and is not stored. Saved files are schema version 1 only. Refresh, close the tab, or Reset discards the in-app copy. Reset clears typed details and member names and counts, then returns to the opening screen. Do not commit or sync a filled PDF or saved JSON to cloud storage.
+- **No stored secrets.** The handbook accepts typed details so they can be printed. Typing passwords and PINs is allowed, but not recommended. Values live in React state for the open tab only: no localStorage, sessionStorage, cookies, URL, or server. **Save encrypted file** always asks for a passphrase and downloads a file the user chooses to keep. The whole handbook is one AES-GCM ciphertext; the key is derived with PBKDF2-SHA-256 (600,000 iterations). The download name includes the family name plus the local date and time. The passphrase is asked again on load and is not stored. Saved files are schema version 1 only. Refresh, close the tab, or Reset discards the in-app copy. Reset clears typed details and member names and counts, then returns to the opening screen. Do not commit or sync a filled PDF or saved JSON to cloud storage.
 - Indian context: identity docs include **Aadhaar** and **PAN** (not SSN/Tax ID).
 - **Git only.** Use git commands for this repo. Do not use the `gh` command.
 
@@ -25,7 +25,7 @@ A React app that builds a printable family emergency handbook. Details can be ty
 
 ## App flow
 
-1. **Opening screen** — two choices: **Load JSON** or **Start blank**.
+1. **Opening screen** — two choices: **Load saved file** or **Start blank**.
 2. **Size step** — number of household members (1–12) plus optional names. Reached only after Start blank.
 3. **Member steps** — per-member counts: bank accounts, debit cards, credit cards, app PINs, UPI IDs, FDs, investments, insurance, loans, digital accounts, medications, employers.
 4. **Household step** — shared counts: emergency contacts, neighbors, vehicles, properties, utilities, subscriptions, pets. The first property is the primary residence. The utilities count is the number of service rows on each property.
@@ -33,7 +33,7 @@ A React app that builds a printable family emergency handbook. Details can be ty
 
 Any block whose count is 0 is omitted from the printout; section numbers are computed dynamically.
 
-All user-entered data lives in one root-level `HandbookData` object: `{ schemaVersion, config, fields, secretFields }`. **Save JSON** writes `SavedHandbook` schema version 1 (`src/save-data.ts`): the config and every field are one AES-GCM ciphertext, and the file name includes the family name plus the local date and time. **Load JSON** accepts only that version, asks for the passphrase, and replaces the in-memory store. A successful load opens the handbook. The file is not written by the app except as that download, and is not kept after load.
+All user-entered data lives in one root-level `HandbookData` object: `{ schemaVersion, config, fields, secretFields }`. **Save encrypted file** writes `SavedHandbook` schema version 1 (`src/save-data.ts`): the config and every field are one AES-GCM ciphertext, and the file name includes the family name plus the local date and time. **Load saved file** accepts only that version, asks for the passphrase, and replaces the in-memory store. A successful load opens the handbook. The file is not written by the app except as that download, and is not kept after load.
 
 ## Code map (`src/`)
 
@@ -43,7 +43,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - `save-data.ts` — builds and downloads the JSON file, and reads a saved file back into `HandbookData`. Encrypts and decrypts the whole handbook with AES-GCM and a user passphrase. The download name includes the family name plus the local date and time.
 - `wizard.tsx` — multi-step count wizard (`data-testid="count-wizard"`). Step content slides between household size, each member, and shared items. The footer stays at the bottom of the card.
 - `stepper.tsx` — reusable step indicator (`data-testid="stepper"`).
-- `App.tsx` — home / wizard / handbook views. The opening screen is two choices: Load JSON or Start blank. The setup toolbar has Save JSON. The handbook toolbar has Edit setup / Reset / Save JSON / Print. The wizard's last step generates the handbook. Load JSON is only on the opening screen. Reset clears records and config and returns there. Save and load passphrase fields are focused when those dialogs open.
+- `App.tsx` — home / wizard / handbook views. The opening screen is two choices: Load saved file or Start blank. The setup toolbar has Save encrypted file. The handbook toolbar has Edit setup / Reset / Save encrypted file / Print. The wizard's last step generates the handbook. Load saved file is only on the opening screen. Reset clears records and config and returns there. Save and load passphrase fields are focused when those dialogs open.
 - `handbook.tsx` — composes `handbook-life.tsx` (members, contacts, home, vehicles) and `handbook-assets.tsx` (subscriptions, pets, etc.).
 - `handbook-member.tsx` — per-member section; `handbook-parts.tsx` — shared `Field`, `DetailInput`, `BlankRows`, `SectionTitle`, etc.
 - `section-numbers.ts` — dynamic section numbering; `styles.ts` — screen + print CSS (`APP_CSS`).
@@ -87,6 +87,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-25** — Each property records address, owned or rented, type, title deed location, owner, and Wi-Fi. Owner details is a text area for name and contact details. Landlord, keys, alarm, and safe fields are gone.
 - **2026-10-25** — Utilities and services sit on each property. The household utilities count is the number of rows per property. Property 1 keeps the `home-utilities` field ids.
 - **2026-10-25** — Each member has a UPI section: UPI ID, app, and PIN. The PIN is a secret. Older saved files missing the count default to 2.
+- **2026-10-25** — The save and load buttons are Save encrypted file and Load saved file.
 
 ## Known leftovers / open items
 
