@@ -169,27 +169,58 @@ export function PersonBlock({
   );
 }
 
-export function PropertyBlock({ index }: { index: number }) {
+export function PropertyBlock({
+  index,
+  utilityCount,
+}: {
+  index: number;
+  utilityCount: number;
+}) {
   const id = (suffix: string) =>
     index === 1 ? 'home-' + suffix : 'home-property-' + index + '-' + suffix;
   return (
-    <div className="avoid-break">
-      <h3>{index === 1 ? 'Property 1 — primary residence' : 'Property ' + index}</h3>
-      <Field id={id('address')} label="Address" />
-      <div className="row-2">
-        <Field id={id('own')} label="Own / rent" />
-        <Field id={id('landlord')} label="Landlord / HOA / property mgmt" />
-        <Field id={id('landlord-phone')} label="Landlord / HOA phone" />
-        <Field id={id('mortgage')} label="Mortgage lender / servicer" />
-        <Field id={id('spare-key')} label="Spare key location" />
-        <Field id={id('other-keys')} label="Who else has a key" />
-        <Field id={id('alarm-vendor')} label="Alarm / smart lock — vendor" />
-        <Field id={id('alarm-code')} label="Alarm / door code" secret />
-        <Field id={id('safe')} label="Safe / lockbox location" />
-        <Field id={id('safe-code')} label="Safe combo / key code" secret />
-        <Field id={id('wifi')} label="Wi-Fi network name (SSID)" />
-        <Field id={id('wifi-password')} label="Wi-Fi password" secret />
+    <div>
+      <div className="avoid-break">
+        <h3>{index === 1 ? 'Property 1 — primary residence' : 'Property ' + index}</h3>
+        <Field id={id('address')} label="Address" />
+        <div className="row-2">
+          <Field id={id('own')} label="Owned / rented" />
+          <Field id={id('type')} label="Type of property" />
+          <Field id={id('deed')} label="Title deed location" />
+        </div>
+        <Field id={id('owner')} label="Owner details" tall />
+        <div className="row-2">
+          <Field id={id('wifi')} label="Wi-Fi network name (SSID)" />
+          <Field id={id('wifi-password')} label="Wi-Fi password" secret />
+        </div>
       </div>
+      {utilityCount > 0 ? (
+        <>
+          <h3>
+            Utilities and services
+            <span className="count-pill">({utilityCount})</span>
+          </h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th>Company</th>
+                <th>Account # / username</th>
+                <th>Password</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <BlankRows
+                count={utilityCount}
+                columns={5}
+                idPrefix={id('utilities')}
+                secretColumns={[3]}
+              />
+            </tbody>
+          </table>
+        </>
+      ) : null}
     </div>
   );
 }

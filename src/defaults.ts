@@ -120,7 +120,7 @@ export const HOUSEHOLD_COUNT_FIELDS: CountField<HouseholdCountKey>[] = [
   {
     key: 'utilities',
     label: 'Utility / home service accounts',
-    help: 'Electric, gas, water, internet, trash',
+    help: 'Electric, gas, water, internet, or trash. Each property gets this many rows',
     min: 0,
     max: 20,
   },

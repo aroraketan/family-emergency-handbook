@@ -14,7 +14,7 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
   const hh = config.household;
   const showContacts = hh.emergencyContacts > 0 || hh.neighbors > 0;
   const showVehicles = hh.vehicles > 0;
-  const showHome = hh.properties > 0 || hh.utilities > 0;
+  const showHome = hh.properties > 0;
 
   const memberFlags: Record<string, boolean> = { howTo: true };
   config.members.forEach((_, index) => {
@@ -183,35 +183,8 @@ export function HandbookLifeSections({ config }: { config: HandbookConfig }) {
           count={hh.properties > 0 ? hh.properties : undefined}
         />
         {properties.map((n) => (
-          <PropertyBlock key={n} index={n} />
+          <PropertyBlock key={n} index={n} utilityCount={hh.utilities} />
         ))}
-        {hh.utilities > 0 ? (
-          <>
-            <h3>
-              Utilities and services
-              <span className="count-pill">({hh.utilities})</span>
-            </h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Service</th>
-                  <th>Company</th>
-                  <th>Account # / username</th>
-                  <th>Password</th>
-                  <th>Phone</th>
-                </tr>
-              </thead>
-              <tbody>
-                <BlankRows
-                  count={hh.utilities}
-                  columns={5}
-                  idPrefix="home-utilities"
-                  secretColumns={[3]}
-                />
-              </tbody>
-            </table>
-          </>
-        ) : null}
       </section>
       ) : null}
 
@@ -253,7 +226,7 @@ export function countLifeSections(config: HandbookConfig): number {
     config.members.length +
     (hh.emergencyContacts > 0 || hh.neighbors > 0 ? 1 : 0) +
     1 + // medical
-    (hh.properties > 0 || hh.utilities > 0 ? 1 : 0) + // home
+    (hh.properties > 0 ? 1 : 0) + // home, including each property's utilities
     (hh.vehicles > 0 ? 1 : 0) +
     1 // legal
   );
