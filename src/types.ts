@@ -1,6 +1,8 @@
 export type MemberCountKey =
   | 'bankAccounts'
+  | 'debitCards'
   | 'creditCards'
+  | 'appPins'
   | 'fixedDeposits'
   | 'investments'
   | 'insurancePolicies'

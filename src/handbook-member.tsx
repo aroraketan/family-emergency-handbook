@@ -132,7 +132,7 @@ export function HandbookMemberSection({
                 <th>Account type</th>
                 <th>Account ending / nickname</th>
                 <th>Username / customer ID</th>
-                <th>Password / PIN</th>
+                <th>Password / App PIN</th>
               </tr>
             </thead>
             <tbody>
@@ -147,10 +147,37 @@ export function HandbookMemberSection({
         </>
       ) : null}
 
+      {c.debitCards > 0 ? (
+        <>
+          <h3>
+            Debit cards
+            <span className="count-pill">({c.debitCards})</span>
+          </h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Bank</th>
+                <th>Card nickname / last 4</th>
+                <th>PIN</th>
+                <th>Phone to report lost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <BlankRows
+                count={c.debitCards}
+                columns={4}
+                idPrefix={memberKey + '-debit'}
+                secretColumns={[2]}
+              />
+            </tbody>
+          </table>
+        </>
+      ) : null}
+
       {c.creditCards > 0 ? (
         <>
           <h3>
-            Credit / debit cards
+            Credit cards
             <span className="count-pill">({c.creditCards})</span>
           </h3>
           <table>
@@ -168,6 +195,32 @@ export function HandbookMemberSection({
                 columns={4}
                 idPrefix={memberKey + '-cards'}
                 secretColumns={[2]}
+              />
+            </tbody>
+          </table>
+        </>
+      ) : null}
+
+      {c.appPins > 0 ? (
+        <>
+          <h3>
+            App PINs
+            <span className="count-pill">({c.appPins})</span>
+          </h3>
+          <table>
+            <thead>
+              <tr>
+                <th>App</th>
+                <th>App PIN</th>
+                <th>Used for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <BlankRows
+                count={c.appPins}
+                columns={3}
+                idPrefix={memberKey + '-app-pins'}
+                secretColumns={[1]}
               />
             </tbody>
           </table>

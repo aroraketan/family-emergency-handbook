@@ -17,11 +17,25 @@ export const MEMBER_COUNT_FIELDS: CountField<MemberCountKey>[] = [
     max: 40,
   },
   {
-    key: 'creditCards',
-    label: 'Credit / debit cards',
-    help: 'Cards this person holds',
+    key: 'debitCards',
+    label: 'Debit cards',
+    help: 'ATM and debit cards this person holds',
     min: 0,
     max: 30,
+  },
+  {
+    key: 'creditCards',
+    label: 'Credit cards',
+    help: 'Credit cards this person holds',
+    min: 0,
+    max: 30,
+  },
+  {
+    key: 'appPins',
+    label: 'App PINs',
+    help: 'Banking and other apps that unlock with a PIN',
+    min: 0,
+    max: 40,
   },
   {
     key: 'fixedDeposits',
@@ -121,7 +135,9 @@ export const HOUSEHOLD_COUNT_FIELDS: CountField<HouseholdCountKey>[] = [
 
 export const DEFAULT_MEMBER_COUNTS: MemberCounts = {
   bankAccounts: 2,
+  debitCards: 1,
   creditCards: 2,
+  appPins: 2,
   fixedDeposits: 1,
   investments: 2,
   insurancePolicies: 2,
