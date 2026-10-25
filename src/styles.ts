@@ -434,7 +434,7 @@ export const APP_CSS = `
     resize: none;
     overflow: hidden;
     white-space: pre-wrap;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
     padding: 0;
   }
   .sheet .fill:focus { background: #fff; }
