@@ -9,7 +9,7 @@ A React app that builds a printable family emergency handbook. Details can be ty
 ## Hard constraints (from the user)
 
 - **Personal hosting only.** Never deploy to vibe-mcp, TerraBLOB, or the vibe-apps repo. Do not use vibe plugin skills to build or deploy this project. The blank app is published on the user's personal GitHub Pages site.
-- **No stored secrets.** The handbook accepts typed details so they can be printed. Typing passwords and PINs is allowed, but not recommended. Values live in React state for the open tab only: no localStorage, sessionStorage, cookies, URL, or server. **Save JSON** always asks for a passphrase and downloads a file the user chooses to keep. The whole handbook is one AES-GCM ciphertext; the key is derived with PBKDF2-SHA-256 (600,000 iterations). The download name includes the local date and time. The passphrase is asked again on load and is not stored. Saved files are schema version 1 only. Refresh, close the tab, or Reset discards the in-app copy. Reset clears typed details and member names and counts, then returns to the opening screen. Do not commit or sync a filled PDF or saved JSON to cloud storage.
+- **No stored secrets.** The handbook accepts typed details so they can be printed. Typing passwords and PINs is allowed, but not recommended. Values live in React state for the open tab only: no localStorage, sessionStorage, cookies, URL, or server. **Save JSON** always asks for a passphrase and downloads a file the user chooses to keep. The whole handbook is one AES-GCM ciphertext; the key is derived with PBKDF2-SHA-256 (600,000 iterations). The download name includes the family name plus the local date and time. The passphrase is asked again on load and is not stored. Saved files are schema version 1 only. Refresh, close the tab, or Reset discards the in-app copy. Reset clears typed details and member names and counts, then returns to the opening screen. Do not commit or sync a filled PDF or saved JSON to cloud storage.
 - Indian context: identity docs include **Aadhaar** and **PAN** (not SSN/Tax ID).
 
 ## Stack and commands
@@ -32,14 +32,14 @@ A React app that builds a printable family emergency handbook. Details can be ty
 
 Any block whose count is 0 is omitted from the printout; section numbers are computed dynamically.
 
-All user-entered data lives in one root-level `HandbookData` object: `{ schemaVersion, config, fields, secretFields }`. **Save JSON** writes `SavedHandbook` schema version 1 (`src/save-data.ts`): the config and every field are one AES-GCM ciphertext, and the file name includes the local date and time. **Load JSON** accepts only that version, asks for the passphrase, and replaces the in-memory store. A successful load opens the handbook. The file is not written by the app except as that download, and is not kept after load.
+All user-entered data lives in one root-level `HandbookData` object: `{ schemaVersion, config, fields, secretFields }`. **Save JSON** writes `SavedHandbook` schema version 1 (`src/save-data.ts`): the config and every field are one AES-GCM ciphertext, and the file name includes the family name plus the local date and time. **Load JSON** accepts only that version, asks for the passphrase, and replaces the in-memory store. A successful load opens the handbook. The file is not written by the app except as that download, and is not kept after load.
 
 ## Code map (`src/`)
 
 - `types.ts` — `MemberCountKey`, `HouseholdCountKey`, `HandbookConfig`, `WizardStep`.
 - `defaults.ts` — count field definitions (labels, min/max), default counts, `resizeMembers`, `totalSlots`.
 - `store.tsx` — root in-memory `HandbookData` store. Owns member/count config, every handbook field, and which fields are secrets.
-- `save-data.ts` — builds and downloads the JSON file, and reads a saved file back into `HandbookData`. Encrypts and decrypts the whole handbook with AES-GCM and a user passphrase. The download name includes the local date and time.
+- `save-data.ts` — builds and downloads the JSON file, and reads a saved file back into `HandbookData`. Encrypts and decrypts the whole handbook with AES-GCM and a user passphrase. The download name includes the family name plus the local date and time.
 - `wizard.tsx` — multi-step count wizard (`data-testid="count-wizard"`). Step content slides between household size, each member, and shared items. The footer stays at the bottom of the card.
 - `stepper.tsx` — reusable step indicator (`data-testid="stepper"`).
 - `App.tsx` — home / wizard / handbook views. The opening screen is two choices: Load JSON or Start blank. The setup toolbar has Save JSON. The handbook toolbar has Edit setup / Reset / Save JSON / Print. The wizard's last step generates the handbook. Load JSON is only on the opening screen. Reset clears records and config and returns there. Save and load passphrase fields are focused when those dialogs open.
@@ -79,6 +79,7 @@ All user-entered data lives in one root-level `HandbookData` object: `{ schemaVe
 - **2026-10-19** — The stepper lives in `stepper.tsx`. Every wizard step slides, including household size and shared items. The wizard footer stays at the bottom of the card.
 - **2026-10-25** — Split debit cards from credit cards. Debit cards sit between bank accounts and credit cards. The bank-account column is Password / App PIN. App PINs are their own count and handbook section.
 - **2026-10-25** — Removed the crypto / digital assets block from each member's investments section.
+- **2026-10-25** — The saved JSON filename includes the household name from the cover, then the local date and time. An empty name is left out.
 
 ## Known leftovers / open items
 

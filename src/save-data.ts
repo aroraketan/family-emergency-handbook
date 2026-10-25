@@ -92,7 +92,15 @@ async function decryptJson(secrets: EncryptedSecrets, passphrase: string): Promi
   return JSON.parse(new TextDecoder().decode(plaintext)) as unknown;
 }
 
-export function handbookFileName(date = new Date()): string {
+function familySlug(name: string): string {
+  return name
+    .trim()
+    .replace(/[^\p{L}\p{N}]+/gu, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60);
+}
+
+export function handbookFileName(date = new Date(), familyName = ''): string {
   const pad = (value: number) => String(value).padStart(2, '0');
   const stamp =
     date.getFullYear() +
@@ -104,7 +112,9 @@ export function handbookFileName(date = new Date()): string {
     pad(date.getHours()) +
     pad(date.getMinutes()) +
     pad(date.getSeconds());
-  return 'family-emergency-handbook-' + stamp + '.json';
+  const slug = familySlug(familyName);
+  const family = slug ? '-' + slug : '';
+  return 'family-emergency-handbook' + family + '-' + stamp + '.json';
 }
 
 export async function buildSavedHandbook(
@@ -275,7 +285,7 @@ export async function downloadSavedHandbook(
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = handbookFileName();
+  link.download = handbookFileName(new Date(), data.fields['cover-family'] ?? '');
   document.body.appendChild(link);
   link.click();
   link.remove();

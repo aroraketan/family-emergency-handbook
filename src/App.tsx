@@ -378,7 +378,7 @@ function SavePassphraseDialog({
         <p>
           The whole handbook is encrypted with this passphrase. You will need it
           to open the file later. It is not saved. The download name includes the
-          date and time.
+          family name, date, and time.
         </p>
         <label htmlFor="save-passphrase">Passphrase</label>
         <input
